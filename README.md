@@ -1,2 +1,3 @@
 # apileipzig4j
-A Java client API for API.Leipzig's API.
+
+A Java client API for [API.Leipzig](http://www.apileipzig.de).
