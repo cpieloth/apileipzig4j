@@ -11,7 +11,7 @@ public class DefaultCompany implements Company {
     private String name;
     private String street;
     private int housenumber;
-    private String housenumberAadditional;
+    private String housenumberAdditional;
     private String postcode;
     private String city;
 
@@ -66,14 +66,12 @@ public class DefaultCompany implements Company {
         this.housenumber = housenumber;
     }
 
-    @Override
-    public String getHousenumberAadditional() {
-        return housenumberAadditional;
+    public String getHousenumberAdditional() {
+        return housenumberAdditional;
     }
 
-    @Override
-    public void setHousenumberAadditional(String housenumberAadditional) {
-        this.housenumberAadditional = housenumberAadditional;
+    public void setHousenumberAdditional(String housenumberAdditional) {
+        this.housenumberAdditional = housenumberAdditional;
     }
 
     @Override

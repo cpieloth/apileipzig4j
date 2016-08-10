@@ -24,8 +24,8 @@ public interface Company {
     int getHousenumber();
     void setHousenumber(int housenumber);
 
-    String getHousenumberAadditional();
-    void setHousenumberAadditional(String housenumberAadditional);
+    String getHousenumberAdditional();
+    void setHousenumberAdditional(String housenumberAdditional);
 
     String getPostcode();
     void setPostcode(String postcode);
