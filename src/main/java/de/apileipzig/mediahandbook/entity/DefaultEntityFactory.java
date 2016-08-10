@@ -10,4 +10,9 @@ public class DefaultEntityFactory implements EntityFactory {
     public DefaultCompany newCompany() {
         return new DefaultCompany();
     }
+
+    @Override
+    public DefaultBranch newBranch() {
+        return new DefaultBranch();
+    }
 }
