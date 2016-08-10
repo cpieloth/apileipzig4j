@@ -1,6 +1,4 @@
-package de.apileipzig.mediahandbook;
-
-import de.apileipzig.mediahandbook.entity.DefaultCompany;
+package de.apileipzig.mediahandbook.entity;
 
 /**
  * Default implementation of a EntityFactory.
@@ -9,7 +7,7 @@ import de.apileipzig.mediahandbook.entity.DefaultCompany;
  */
 public class DefaultEntityFactory implements EntityFactory {
     @Override
-    public DefaultCompany createCompany() {
+    public DefaultCompany newCompany() {
         return new DefaultCompany();
     }
 }

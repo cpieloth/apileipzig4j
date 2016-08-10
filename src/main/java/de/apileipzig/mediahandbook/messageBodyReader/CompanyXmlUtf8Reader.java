@@ -1,8 +1,8 @@
-package de.apileipzig.mediahandbook.io.messageBodyReader;
+package de.apileipzig.mediahandbook.messageBodyReader;
 
-import de.apileipzig.mediahandbook.EntityFactoryBuilder;
+import de.apileipzig.mediahandbook.entity.EntityFactoryBuilder;
 import de.apileipzig.mediahandbook.entity.Company;
-import de.apileipzig.mediahandbook.EntityFactory;
+import de.apileipzig.mediahandbook.entity.EntityFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
@@ -43,7 +43,7 @@ public class CompanyXmlUtf8Reader implements MessageBodyReader<Company> {
         }
 
         EntityFactory ef = EntityFactoryBuilder.newEntityFactory();
-        Company company = ef.createCompany();
+        Company company = ef.newCompany();
 
         Node child = companyNode.getFirstChild();
         while (child != null) {

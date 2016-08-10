@@ -1,4 +1,4 @@
-package de.apileipzig.mediahandbook.io.messageBodyReader;
+package de.apileipzig.mediahandbook.messageBodyReader;
 
 import de.apileipzig.mediahandbook.entity.Company;
 import org.slf4j.Logger;

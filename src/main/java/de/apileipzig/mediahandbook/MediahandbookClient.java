@@ -2,8 +2,8 @@ package de.apileipzig.mediahandbook;
 
 import de.apileipzig.ApiLeipzigClient;
 import de.apileipzig.mediahandbook.entity.Company;
-import de.apileipzig.mediahandbook.io.messageBodyReader.CompanyListXmlUtf8Reader;
-import de.apileipzig.mediahandbook.io.messageBodyReader.CompanyXmlUtf8Reader;
+import de.apileipzig.mediahandbook.messageBodyReader.CompanyListXmlUtf8Reader;
+import de.apileipzig.mediahandbook.messageBodyReader.CompanyXmlUtf8Reader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,31 +44,30 @@ public class MediahandbookClient extends ApiLeipzigClient {
         clientBuilder.register(CompanyListXmlUtf8Reader.class);
     }
 
+    /**
+     * Get all companies.
+     *
+     * @return List of companies or null.
+     */
     public List<Company> getCompanies() {
-        LinkedList<Company> destination = new LinkedList<>();
-        if(getCompanies(destination)) {
-            return destination;
-        }
-        else {
-            return null;
-        }
-    }
-
-    public boolean getCompanies(final List<Company> destination) {
         WebTarget companiesTarget = addQueryParam(mediabookTarget.path("companies"));
 
         Response response = companiesTarget.request(MEDIA_TYPE).get();
         final int status = response.getStatus();
         if(status != Response.Status.OK.getStatusCode()) {
             log.error("Unsuccessful request! Response status: {}", status);
-            return false;
+            return null;
         }
 
-        final List<Company> list = response.readEntity(new GenericType<List<Company>>() {});
-        destination.addAll(list);
-        return list != null;
+        return response.readEntity(new GenericType<List<Company>>() {});
     }
 
+    /**
+     * Get a company.
+     *
+     * @param id ID of the desired company.
+     * @return Company instance or null.
+     */
     public Company getCompany(int id) {
         WebTarget companiesTarget = addQueryParam(mediabookTarget.path("companies/" + id));
 

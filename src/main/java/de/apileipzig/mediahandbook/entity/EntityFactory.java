@@ -1,4 +1,4 @@
-package de.apileipzig.mediahandbook;
+package de.apileipzig.mediahandbook.entity;
 
 import de.apileipzig.mediahandbook.entity.Company;
 
@@ -9,5 +9,11 @@ import de.apileipzig.mediahandbook.entity.Company;
  * @author cpieloth
  */
 public interface EntityFactory {
-    Company createCompany();
+
+    /**
+     * Get a new instance of a company implementation.
+     *
+     * @return instance of a company
+     */
+    Company newCompany();
 }
