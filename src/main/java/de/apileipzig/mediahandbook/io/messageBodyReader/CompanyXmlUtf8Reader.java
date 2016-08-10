@@ -5,10 +5,8 @@ import de.apileipzig.mediahandbook.entity.Company;
 import de.apileipzig.mediahandbook.EntityFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.ws.rs.WebApplicationException;
@@ -24,7 +22,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 /**
- * TODO
+ * XML deserialization for company entity.
  *
  * @author cpieloth
  */
@@ -32,46 +30,40 @@ public class CompanyXmlUtf8Reader implements MessageBodyReader<Company> {
 
     private static final Logger log = LoggerFactory.getLogger(CompanyXmlUtf8Reader.class);
 
-    public static Company fromXml(InputStream entityStream) {
-        DocumentBuilder db;
-        try {
-            db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            log.error("Could not create document builder!", e);
-            return null;
-        }
-        Document doc;
-        try {
-            doc = db.parse(entityStream);
-        } catch (SAXException e) {
-            log.error("Parse error!", e);
-            return null;
-        } catch (IOException e) {
-            log.error("I/O error!", e);
-            return null;
-        }
-
-        final Element hashNode = doc.getDocumentElement();
-        if (!"hash".equals(hashNode.getTagName())) {
-            log.error("Expected hash node, found: {}", hashNode.getTagName());
-            return null;
-        }
-
-        NodeList nodeList = hashNode.getElementsByTagName("model");
-        if (nodeList == null || nodeList.getLength() != 1) {
-            log.error("No or to many model nodes!");
-            return null;
-        }
-
-        return readCompanyNode(nodeList.item(0));
-    }
-
+    /**
+     * Deserialize XML company node.
+     *
+     * @param companyNode Parent node which contains company fields.
+     * @return Filled Company object or null
+     */
     public static Company readCompanyNode(final Node companyNode) {
+        // Use element nodes, only
+        if (companyNode.getNodeType() != Node.ELEMENT_NODE) {
+            return null;
+        }
+
         EntityFactory ef = EntityFactoryBuilder.newEntityFactory();
         Company company = ef.createCompany();
 
         Node child = companyNode.getFirstChild();
         while (child != null) {
+            // Use element nodes, only
+            if (child.getNodeType() != Node.ELEMENT_NODE) {
+                child = child.getNextSibling();
+                continue;
+            }
+
+            // Skip "nil=true" nodes
+            if (child.hasAttributes()) {
+                NamedNodeMap map = child.getAttributes();
+                Node node = map.getNamedItem("nil");
+                if ("true".equals(node.getNodeValue().toLowerCase())) {
+                    child = child.getNextSibling();
+                    continue;
+                }
+            }
+
+            // Read data
             if ("city".equals(child.getNodeName().toLowerCase())) {
                 company.setCity(child.getTextContent());
             }
@@ -114,6 +106,38 @@ public class CompanyXmlUtf8Reader implements MessageBodyReader<Company> {
     public Company readFrom(Class<Company> type, Type genericType, Annotation[] annotations, MediaType mediaType,
         MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
         throws IOException, WebApplicationException {
-        return fromXml(entityStream);
+        DocumentBuilder db;
+        try {
+            db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            log.error("Could not create document builder!", e);
+            return null;
+        }
+        Document doc;
+        try {
+            InputSource is = new InputSource(entityStream);
+            is.setEncoding("UTF-8");
+            doc = db.parse(is);
+        } catch (SAXException e) {
+            log.error("Parse error!", e);
+            return null;
+        } catch (IOException e) {
+            log.error("I/O error!", e);
+            return null;
+        }
+
+        final Element hashNode = doc.getDocumentElement();
+        if (!"hash".equals(hashNode.getTagName())) {
+            log.error("Expected hash node, found: {}", hashNode.getTagName());
+            return null;
+        }
+
+        NodeList nodeList = hashNode.getElementsByTagName("model");
+        if (nodeList == null || nodeList.getLength() != 1) {
+            log.error("No or to many model nodes!");
+            return null;
+        }
+
+        return readCompanyNode(nodeList.item(0));
     }
 }
