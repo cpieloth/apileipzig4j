@@ -36,7 +36,7 @@ public class DefaultBranch implements Branch {
 
     @Override
     public String getInternalType() {
-        return name;
+        return internalType;
     }
 
     @Override
