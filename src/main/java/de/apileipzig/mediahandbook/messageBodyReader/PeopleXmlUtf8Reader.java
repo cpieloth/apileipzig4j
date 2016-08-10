@@ -33,19 +33,19 @@ public class PeopleXmlUtf8Reader implements MessageBodyReader<People> {
     /**
      * Deserialize XML people node.
      *
-     * @param peopleNode Parent node which contains people fields.
+     * @param entityNode Parent node which contains people fields.
      * @return Filled People object or null
      */
-    public static People readPeopleNode(final Node peopleNode) {
+    public static People readEntityNode(final Node entityNode) {
         // Use element nodes, only
-        if (peopleNode.getNodeType() != Node.ELEMENT_NODE) {
+        if (entityNode.getNodeType() != Node.ELEMENT_NODE) {
             return null;
         }
 
         EntityFactory ef = EntityFactoryBuilder.newEntityFactory();
-        People people = ef.newPeople();
+        People entity = ef.newPeople();
 
-        Node child = peopleNode.getFirstChild();
+        Node child = entityNode.getFirstChild();
         while (child != null) {
             // Use element nodes, only
             if (child.getNodeType() != Node.ELEMENT_NODE) {
@@ -65,31 +65,31 @@ public class PeopleXmlUtf8Reader implements MessageBodyReader<People> {
 
             // Read data
             if ("company-id ".equals(child.getNodeName().toLowerCase())) {
-                people.setCompanyId(Integer.parseInt(child.getTextContent()));
+                entity.setCompanyId(Integer.parseInt(child.getTextContent()));
             }
             else if ("id".equals(child.getNodeName().toLowerCase())) {
-                people.setId(Integer.parseInt(child.getTextContent()));
+                entity.setId(Integer.parseInt(child.getTextContent()));
             }
             else if ("first-name".equals(child.getNodeName().toLowerCase())) {
-                people.setFirstName(child.getTextContent());
+                entity.setFirstName(child.getTextContent());
             }
             else if ("last-name".equals(child.getNodeName().toLowerCase())) {
-                people.setLastName(child.getTextContent());
+                entity.setLastName(child.getTextContent());
             }
             else if ("occupation".equals(child.getNodeName().toLowerCase())) {
-                people.setOccupation(child.getTextContent());
+                entity.setOccupation(child.getTextContent());
             }
             else if ("position ".equals(child.getNodeName().toLowerCase())) {
-                people.setPosition(child.getTextContent());
+                entity.setPosition(child.getTextContent());
             }
             else if ("title".equals(child.getNodeName().toLowerCase())) {
-                people.setTitle(child.getTextContent());
+                entity.setTitle(child.getTextContent());
             }
 
             child = child.getNextSibling();
         }
 
-        return people;
+        return entity;
     }
 
     @Override
@@ -135,6 +135,6 @@ public class PeopleXmlUtf8Reader implements MessageBodyReader<People> {
             return null;
         }
 
-        return readPeopleNode(nodeList.item(0));
+        return readEntityNode(nodeList.item(0));
     }
 }

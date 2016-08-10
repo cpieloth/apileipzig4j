@@ -85,7 +85,7 @@ public class CompanyListXmlUtf8Reader implements MessageBodyReader<List<Company>
         LinkedList<Company> companies = new LinkedList<>();
         Node child = nodeList.item(0).getFirstChild();
         while (child != null) {
-            Company company = CompanyXmlUtf8Reader.readCompanyNode(child);
+            Company company = CompanyXmlUtf8Reader.readEntityNode(child);
             if (company != null) {
                 companies.add(company);
             }

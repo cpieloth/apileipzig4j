@@ -1,7 +1,6 @@
 package de.apileipzig.mediahandbook.messageBodyReader;
 
 import de.apileipzig.mediahandbook.entity.Branch;
-import de.apileipzig.mediahandbook.entity.Company;
 import de.apileipzig.mediahandbook.entity.EntityFactory;
 import de.apileipzig.mediahandbook.entity.EntityFactoryBuilder;
 import org.slf4j.Logger;
@@ -32,21 +31,21 @@ public class BranchXmlUtf8Reader implements MessageBodyReader<Branch> {
     private static final Logger log = LoggerFactory.getLogger(BranchXmlUtf8Reader.class);
 
     /**
-     * Deserialize XML company node.
+     * Deserialize XML branch node.
      *
-     * @param branchNode Parent node which contains company fields.
-     * @return Filled Company object or null
+     * @param entityNode Parent node which contains branch fields.
+     * @return Filled Branch object or null
      */
-    public static Branch readBranchNode(final Node branchNode) {
+    public static Branch readEntityNode(final Node entityNode) {
         // Use element nodes, only
-        if (branchNode.getNodeType() != Node.ELEMENT_NODE) {
+        if (entityNode.getNodeType() != Node.ELEMENT_NODE) {
             return null;
         }
 
         EntityFactory ef = EntityFactoryBuilder.newEntityFactory();
-        Branch branch = ef.newBranch();
+        Branch entity = ef.newBranch();
 
-        Node child = branchNode.getFirstChild();
+        Node child = entityNode.getFirstChild();
         while (child != null) {
             // Use element nodes, only
             if (child.getNodeType() != Node.ELEMENT_NODE) {
@@ -66,28 +65,28 @@ public class BranchXmlUtf8Reader implements MessageBodyReader<Branch> {
 
             // Read data
             if ("description ".equals(child.getNodeName().toLowerCase())) {
-                branch.setDescription(child.getTextContent());
+                entity.setDescription(child.getTextContent());
             }
             else if ("id".equals(child.getNodeName().toLowerCase())) {
-                branch.setId(Integer.parseInt(child.getTextContent()));
+                entity.setId(Integer.parseInt(child.getTextContent()));
             }
             else if ("parent-id".equals(child.getNodeName().toLowerCase())) {
-                branch.setParentId(Integer.parseInt(child.getTextContent()));
+                entity.setParentId(Integer.parseInt(child.getTextContent()));
             }
             else if ("name".equals(child.getNodeName().toLowerCase())) {
-                branch.setName(child.getTextContent());
+                entity.setName(child.getTextContent());
             }
             else if ("internal-key".equals(child.getNodeName().toLowerCase())) {
-                branch.setInternalKey(child.getTextContent());
+                entity.setInternalKey(child.getTextContent());
             }
             else if ("internal-type".equals(child.getNodeName().toLowerCase())) {
-                branch.setInternalType(child.getTextContent());
+                entity.setInternalType(child.getTextContent());
             }
 
             child = child.getNextSibling();
         }
 
-        return branch;
+        return entity;
     }
 
     @Override
@@ -133,6 +132,6 @@ public class BranchXmlUtf8Reader implements MessageBodyReader<Branch> {
             return null;
         }
 
-        return readBranchNode(nodeList.item(0));
+        return readEntityNode(nodeList.item(0));
     }
 }

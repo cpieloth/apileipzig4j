@@ -85,7 +85,7 @@ public class BranchListXmlUtf8Reader implements MessageBodyReader<List<Branch>> 
         LinkedList<Branch> branches = new LinkedList<>();
         Node child = nodeList.item(0).getFirstChild();
         while (child != null) {
-            Branch branch = BranchXmlUtf8Reader.readBranchNode(child);
+            Branch branch = BranchXmlUtf8Reader.readEntityNode(child);
             if (branch != null) {
                 branches.add(branch);
             }

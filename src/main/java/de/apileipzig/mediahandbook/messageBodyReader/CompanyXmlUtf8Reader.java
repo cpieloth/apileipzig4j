@@ -33,19 +33,19 @@ public class CompanyXmlUtf8Reader implements MessageBodyReader<Company> {
     /**
      * Deserialize XML company node.
      *
-     * @param companyNode Parent node which contains company fields.
+     * @param entityNode Parent node which contains company fields.
      * @return Filled Company object or null
      */
-    public static Company readCompanyNode(final Node companyNode) {
+    public static Company readEntityNode(final Node entityNode) {
         // Use element nodes, only
-        if (companyNode.getNodeType() != Node.ELEMENT_NODE) {
+        if (entityNode.getNodeType() != Node.ELEMENT_NODE) {
             return null;
         }
 
         EntityFactory ef = EntityFactoryBuilder.newEntityFactory();
-        Company company = ef.newCompany();
+        Company entity = ef.newCompany();
 
-        Node child = companyNode.getFirstChild();
+        Node child = entityNode.getFirstChild();
         while (child != null) {
             // Use element nodes, only
             if (child.getNodeType() != Node.ELEMENT_NODE) {
@@ -65,34 +65,34 @@ public class CompanyXmlUtf8Reader implements MessageBodyReader<Company> {
 
             // Read data
             if ("city".equals(child.getNodeName().toLowerCase())) {
-                company.setCity(child.getTextContent());
+                entity.setCity(child.getTextContent());
             }
             else if ("id".equals(child.getNodeName().toLowerCase())) {
-                company.setId(Integer.parseInt(child.getTextContent()));
+                entity.setId(Integer.parseInt(child.getTextContent()));
             }
             else if ("old-id".equals(child.getNodeName().toLowerCase())) {
-                company.setOldId(Integer.parseInt(child.getTextContent()));
+                entity.setOldId(Integer.parseInt(child.getTextContent()));
             }
             else if ("name".equals(child.getNodeName().toLowerCase())) {
-                company.setName(child.getTextContent());
+                entity.setName(child.getTextContent());
             }
             else if ("street".equals(child.getNodeName().toLowerCase())) {
-                company.setStreet(child.getTextContent());
+                entity.setStreet(child.getTextContent());
             }
             else if ("housenumber".equals(child.getNodeName().toLowerCase())) {
-                company.setHousenumber(Integer.parseInt(child.getTextContent()));
+                entity.setHousenumber(Integer.parseInt(child.getTextContent()));
             }
             else if ("housenumber-additional".equals(child.getNodeName().toLowerCase())) {
-                company.setHousenumberAdditional(child.getTextContent());
+                entity.setHousenumberAdditional(child.getTextContent());
             }
             else if ("postcode".equals(child.getNodeName().toLowerCase())) {
-                company.setPostcode(child.getTextContent());
+                entity.setPostcode(child.getTextContent());
             }
 
             child = child.getNextSibling();
         }
 
-        return company;
+        return entity;
     }
 
     @Override
@@ -138,6 +138,6 @@ public class CompanyXmlUtf8Reader implements MessageBodyReader<Company> {
             return null;
         }
 
-        return readCompanyNode(nodeList.item(0));
+        return readEntityNode(nodeList.item(0));
     }
 }

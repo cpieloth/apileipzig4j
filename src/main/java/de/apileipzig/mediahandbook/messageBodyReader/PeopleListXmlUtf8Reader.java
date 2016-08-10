@@ -85,7 +85,7 @@ public class PeopleListXmlUtf8Reader implements MessageBodyReader<List<People>> 
         LinkedList<People> peoples = new LinkedList<>();
         Node child = nodeList.item(0).getFirstChild();
         while (child != null) {
-            People people = PeopleXmlUtf8Reader.readPeopleNode(child);
+            People people = PeopleXmlUtf8Reader.readEntityNode(child);
             if (people != null) {
                 peoples.add(people);
             }
