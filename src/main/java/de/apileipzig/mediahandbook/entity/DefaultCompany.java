@@ -93,4 +93,9 @@ public class DefaultCompany implements Company {
     public void setCity(String city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return "" + this.getClass().getSimpleName() + "[id=" + id + ",name=" + name + ",...]";
+    }
 }

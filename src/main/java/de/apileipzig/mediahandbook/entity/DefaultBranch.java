@@ -73,4 +73,9 @@ public class DefaultBranch implements Branch {
     public void setDescription(String street) {
         this.description = street;
     }
+
+    @Override
+    public String toString() {
+        return "" + this.getClass().getSimpleName() + "[id=" + id + ",name=" + name + ",...]";
+    }
 }
