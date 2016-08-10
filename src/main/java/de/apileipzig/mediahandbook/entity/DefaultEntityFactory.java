@@ -15,4 +15,9 @@ public class DefaultEntityFactory implements EntityFactory {
     public DefaultBranch newBranch() {
         return new DefaultBranch();
     }
+
+    @Override
+    public DefaultPeople newPeople() {
+        return new DefaultPeople();
+    }
 }

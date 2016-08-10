@@ -3,10 +3,8 @@ package de.apileipzig.mediahandbook;
 import de.apileipzig.ApiLeipzigClient;
 import de.apileipzig.mediahandbook.entity.Branch;
 import de.apileipzig.mediahandbook.entity.Company;
-import de.apileipzig.mediahandbook.messageBodyReader.BranchListXmlUtf8Reader;
-import de.apileipzig.mediahandbook.messageBodyReader.BranchXmlUtf8Reader;
-import de.apileipzig.mediahandbook.messageBodyReader.CompanyListXmlUtf8Reader;
-import de.apileipzig.mediahandbook.messageBodyReader.CompanyXmlUtf8Reader;
+import de.apileipzig.mediahandbook.entity.People;
+import de.apileipzig.mediahandbook.messageBodyReader.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +45,8 @@ public class MediahandbookClient extends ApiLeipzigClient {
         clientBuilder.register(CompanyListXmlUtf8Reader.class);
         clientBuilder.register(BranchXmlUtf8Reader.class);
         clientBuilder.register(BranchListXmlUtf8Reader.class);
+        clientBuilder.register(PeopleXmlUtf8Reader.class);
+        clientBuilder.register(PeopleListXmlUtf8Reader.class);
     }
 
     /**
@@ -123,10 +123,47 @@ public class MediahandbookClient extends ApiLeipzigClient {
         return response.readEntity(Branch.class);
     }
 
+    /**
+     * Get all people.
+     *
+     * @return List of people or null.
+     */
+    public List<People> getPeople() {
+        WebTarget branchTarget = addQueryParam(mediabookTarget.path("people"));
+
+        Response response = branchTarget.request(MEDIA_TYPE).get();
+        final int status = response.getStatus();
+        if(status != Response.Status.OK.getStatusCode()) {
+            log.error("Unsuccessful request! Response status: {}", status);
+            return null;
+        }
+
+        return response.readEntity(new GenericType<List<People>>() {});
+    }
+
+    /**
+     * Get a people.
+     *
+     * @param id ID of the desired people.
+     * @return People instance or null.
+     */
+    public People getPeople(int id) {
+        WebTarget branchTarget = addQueryParam(mediabookTarget.path("people/" + id));
+
+        Response response = branchTarget.request(MEDIA_TYPE).get();
+        final int status = response.getStatus();
+        if(status != Response.Status.OK.getStatusCode()) {
+            log.error("Unsuccessful request! Response status: {}", status);
+            return null;
+        }
+
+        return response.readEntity(People.class);
+    }
+
     public static void main(String[] args) {
         MediahandbookClient client = new MediahandbookClient();
         client.open();
-        System.out.println(client.getBranch(1));
+        System.out.println(client.getPeople(2));
         client.close();
     }
 }

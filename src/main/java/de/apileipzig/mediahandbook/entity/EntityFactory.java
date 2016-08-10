@@ -21,4 +21,11 @@ public interface EntityFactory {
      * @return instance of a branch
      */
     Branch newBranch();
+
+    /**
+     * Get a new instance of a people implementation.
+     *
+     * @return instance of a people
+     */
+    People newPeople();
 }
