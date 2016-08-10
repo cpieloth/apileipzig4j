@@ -59,12 +59,13 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
         Response response = companiesTarget.request(MEDIA_TYPE).get();
         final int status = response.getStatus();
-        if(status != Response.Status.OK.getStatusCode()) {
+        if (status != Response.Status.OK.getStatusCode()) {
             log.error("Unsuccessful request! Response status: {}", status);
             return null;
         }
 
-        return response.readEntity(new GenericType<List<Company>>() {});
+        return response.readEntity(new GenericType<List<Company>>() {
+        });
     }
 
     /**
@@ -78,7 +79,7 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
         Response response = companiesTarget.request(MEDIA_TYPE).get();
         final int status = response.getStatus();
-        if(status != Response.Status.OK.getStatusCode()) {
+        if (status != Response.Status.OK.getStatusCode()) {
             log.error("Unsuccessful request! Response status: {}", status);
             return null;
         }
@@ -96,12 +97,13 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
         Response response = branchTarget.request(MEDIA_TYPE).get();
         final int status = response.getStatus();
-        if(status != Response.Status.OK.getStatusCode()) {
+        if (status != Response.Status.OK.getStatusCode()) {
             log.error("Unsuccessful request! Response status: {}", status);
             return null;
         }
 
-        return response.readEntity(new GenericType<List<Branch>>() {});
+        return response.readEntity(new GenericType<List<Branch>>() {
+        });
     }
 
     /**
@@ -115,7 +117,7 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
         Response response = branchTarget.request(MEDIA_TYPE).get();
         final int status = response.getStatus();
-        if(status != Response.Status.OK.getStatusCode()) {
+        if (status != Response.Status.OK.getStatusCode()) {
             log.error("Unsuccessful request! Response status: {}", status);
             return null;
         }
@@ -133,12 +135,13 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
         Response response = branchTarget.request(MEDIA_TYPE).get();
         final int status = response.getStatus();
-        if(status != Response.Status.OK.getStatusCode()) {
+        if (status != Response.Status.OK.getStatusCode()) {
             log.error("Unsuccessful request! Response status: {}", status);
             return null;
         }
 
-        return response.readEntity(new GenericType<List<People>>() {});
+        return response.readEntity(new GenericType<List<People>>() {
+        });
     }
 
     /**
@@ -152,7 +155,7 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
         Response response = branchTarget.request(MEDIA_TYPE).get();
         final int status = response.getStatus();
-        if(status != Response.Status.OK.getStatusCode()) {
+        if (status != Response.Status.OK.getStatusCode()) {
             log.error("Unsuccessful request! Response status: {}", status);
             return null;
         }
@@ -162,8 +165,13 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
     public static void main(String[] args) {
         MediahandbookClient client = new MediahandbookClient();
+        // client.setApiKey("xyz");
         client.open();
-        System.out.println(client.getPeople(2));
+
+        System.out.println("Company count: " + client.getCompanies().size());
+        System.out.println("Branches count: " + client.getBranches().size());
+        System.out.println("People count: " + client.getPeople().size());
+
         client.close();
     }
 }
