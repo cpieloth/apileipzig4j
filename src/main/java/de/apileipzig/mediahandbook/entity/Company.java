@@ -1,5 +1,7 @@
 package de.apileipzig.mediahandbook.entity;
 
+import de.apileipzig.entity.Entity;
+
 /**
  * A company of the mediahandbook.
  * See http://www.apileipzig.de/wiki/show/Ressourcen for more details.
@@ -8,10 +10,7 @@ package de.apileipzig.mediahandbook.entity;
  *
  * @author cpieloth
  */
-public interface Company {
-    int getId();
-    void setId(int id);
-
+public interface Company extends Entity{
     int getOldId();
     void setOldId(int id);
 

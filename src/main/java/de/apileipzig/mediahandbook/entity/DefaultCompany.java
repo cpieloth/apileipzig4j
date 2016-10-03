@@ -1,12 +1,13 @@
 package de.apileipzig.mediahandbook.entity;
 
+import de.apileipzig.entity.DefaultEntity;
+
 /**
  * Default implementation of a Company.
  *
  * @author cpieloth
  */
-public class DefaultCompany implements Company {
-    private int id;
+public class DefaultCompany extends DefaultEntity implements Company {
     private int oldId;
     private String name;
     private String street;
@@ -14,17 +15,6 @@ public class DefaultCompany implements Company {
     private String housenumberAdditional;
     private String postcode;
     private String city;
-
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public int getOldId() {

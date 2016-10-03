@@ -1,5 +1,7 @@
 package de.apileipzig.mediahandbook.entity;
 
+import de.apileipzig.entity.Entity;
+
 /**
  * A branch of the mediahandbook.
  * See http://www.apileipzig.de/wiki/show/Ressourcen for more details.
@@ -8,10 +10,7 @@ package de.apileipzig.mediahandbook.entity;
  *
  * @author cpieloth
  */
-public interface People {
-    int getId();
-    void setId(int id);
-
+public interface People extends Entity {
     int getCompanyId();
     void setCompanyId(int id);
 

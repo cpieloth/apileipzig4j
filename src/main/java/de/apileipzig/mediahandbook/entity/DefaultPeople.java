@@ -1,29 +1,19 @@
 package de.apileipzig.mediahandbook.entity;
 
+import de.apileipzig.entity.DefaultEntity;
+
 /**
  * Default implementation of a People.
  *
  * @author cpieloth
  */
-public class DefaultPeople implements People {
-    private int id;
+public class DefaultPeople extends DefaultEntity implements People {
     private int companyId;
     private String firstName;
     private String lastName;
     private String title;
     private String position;
     private String occupation;
-
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public int getCompanyId() {

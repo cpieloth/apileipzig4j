@@ -1,6 +1,7 @@
 package de.apileipzig.mediahandbook;
 
 import de.apileipzig.ApiLeipzigClient;
+import de.apileipzig.EntityUrlSetter;
 import de.apileipzig.mediahandbook.entity.Branch;
 import de.apileipzig.mediahandbook.entity.Company;
 import de.apileipzig.mediahandbook.entity.People;
@@ -64,8 +65,9 @@ public class MediahandbookClient extends ApiLeipzigClient {
             return null;
         }
 
-        return response.readEntity(new GenericType<List<Company>>() {
-        });
+        final List<Company> companies = response.readEntity(new GenericType<List<Company>>() {});
+        companies.forEach(new EntityUrlSetter(mediabookTarget.path("companies").getUriBuilder()));
+        return companies;
     }
 
     /**
@@ -84,7 +86,9 @@ public class MediahandbookClient extends ApiLeipzigClient {
             return null;
         }
 
-        return response.readEntity(Company.class);
+        Company company = response.readEntity(Company.class);
+        new EntityUrlSetter(mediabookTarget.path("companies").getUriBuilder()).accept(company);
+        return company;
     }
 
     /**
@@ -102,8 +106,9 @@ public class MediahandbookClient extends ApiLeipzigClient {
             return null;
         }
 
-        return response.readEntity(new GenericType<List<Branch>>() {
-        });
+        final List<Branch> branches = response.readEntity(new GenericType<List<Branch>>() {});
+        branches.forEach(new EntityUrlSetter(mediabookTarget.path("branches").getUriBuilder()));
+        return branches;
     }
 
     /**
@@ -122,7 +127,9 @@ public class MediahandbookClient extends ApiLeipzigClient {
             return null;
         }
 
-        return response.readEntity(Branch.class);
+        Branch branch = response.readEntity(Branch.class);
+        new EntityUrlSetter(mediabookTarget.path("branches").getUriBuilder()).accept(branch);
+        return branch;
     }
 
     /**
@@ -140,8 +147,9 @@ public class MediahandbookClient extends ApiLeipzigClient {
             return null;
         }
 
-        return response.readEntity(new GenericType<List<People>>() {
-        });
+        final List<People> people = response.readEntity(new GenericType<List<People>>() {});
+        people.forEach(new EntityUrlSetter(mediabookTarget.path("people").getUriBuilder()));
+        return people;
     }
 
     /**
@@ -160,6 +168,8 @@ public class MediahandbookClient extends ApiLeipzigClient {
             return null;
         }
 
-        return response.readEntity(People.class);
+        People people = response.readEntity(People.class);
+        new EntityUrlSetter(mediabookTarget.path("people").getUriBuilder()).accept(people);
+        return people;
     }
 }

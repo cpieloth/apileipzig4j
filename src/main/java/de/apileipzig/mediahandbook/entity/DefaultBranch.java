@@ -1,28 +1,18 @@
 package de.apileipzig.mediahandbook.entity;
 
+import de.apileipzig.entity.DefaultEntity;
+
 /**
  * Default implementation of a Branch.
  *
  * @author cpieloth
  */
-public class DefaultBranch implements Branch {
-    private int id;
+public class DefaultBranch extends DefaultEntity implements Branch {
     private int parentId;
     private String internalType;
     private String internalKey;
     private String name;
     private String description;
-
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public int getParentId() {
