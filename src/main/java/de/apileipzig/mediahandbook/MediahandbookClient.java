@@ -162,16 +162,4 @@ public class MediahandbookClient extends ApiLeipzigClient {
 
         return response.readEntity(People.class);
     }
-
-    public static void main(String[] args) {
-        MediahandbookClient client = new MediahandbookClient();
-        // client.setApiKey("xyz");
-        client.open();
-
-        System.out.println("Company count: " + client.getCompanies().size());
-        System.out.println("Branches count: " + client.getBranches().size());
-        System.out.println("People count: " + client.getPeople().size());
-
-        client.close();
-    }
 }
